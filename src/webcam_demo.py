@@ -49,14 +49,22 @@ def run_demo(camera_index: int = 0, csv_output: str = "session_report.csv") -> N
             frame = cv2.flip(frame, 1)  # mirror for a natural user-facing view
             report = inspector.process_frame(frame)
 
-            lighting_color = (0, 220, 0) if report.lighting.status == "APPROVED" else (0, 0, 255)
-            focus_color = (0, 220, 0) if report.structural.focus_status == "SHARP" else (0, 165, 255)
+            lighting_ok = report.lighting.status == "APPROVED"
+            in_focus = report.structural.focus_status == "SHARP"
+            lighting_color = (0, 220, 0) if lighting_ok else (0, 0, 255)
+            focus_color = (0, 220, 0) if in_focus else (0, 165, 255)
+
+            brightness = report.lighting.average_brightness
+            sharpness = report.structural.sharpness_score
+            gesture_name = report.gesture.gesture
+            confidence = report.gesture.confidence
+            pinch_label = "YES" if report.gesture.is_pinching else "no"
 
             lines = [
-                (f"Lighting: {report.lighting.status} ({report.lighting.average_brightness:.1f})", lighting_color),
-                (f"Focus: {report.structural.focus_status} ({report.structural.sharpness_score:.0f})", focus_color),
-                (f"Gesture: {report.gesture.gesture} ({report.gesture.confidence:.0%})", (255, 255, 255)),
-                (f"Pinch: {'YES' if report.gesture.is_pinching else 'no'}", (255, 255, 255)),
+                (f"Lighting: {report.lighting.status} ({brightness:.1f})", lighting_color),
+                (f"Focus: {report.structural.focus_status} ({sharpness:.0f})", focus_color),
+                (f"Gesture: {gesture_name} ({confidence:.0%})", (255, 255, 255)),
+                (f"Pinch: {pinch_label}", (255, 255, 255)),
                 (f"Latency: {report.processing_latency_ms:.1f} ms", (200, 200, 200)),
             ]
             for i, (line, color) in enumerate(lines):
@@ -76,11 +84,13 @@ def run_demo(camera_index: int = 0, csv_output: str = "session_report.csv") -> N
                 break
             if key == ord("c"):
                 inspector.export_history_csv(csv_output)
-                print(f"📄 Session history exported to '{csv_output}' ({len(inspector.history)} frames).")
+                frame_count = len(inspector.history)
+                print(f"📄 Exported '{csv_output}' ({frame_count} frames).")
     finally:
         if inspector.history:
             inspector.export_history_csv(csv_output)
-            print(f"📄 Session history exported to '{csv_output}' ({len(inspector.history)} frames).")
+            frame_count = len(inspector.history)
+            print(f"📄 Exported '{csv_output}' ({frame_count} frames).")
         inspector.close()
         cap.release()
         cv2.destroyAllWindows()

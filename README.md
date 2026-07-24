@@ -6,9 +6,10 @@
 ![OpenCV](https://img.shields.io/badge/OpenCV-4.x-5C3EE8?logo=opencv&logoColor=white)
 ![MediaPipe](https://img.shields.io/badge/MediaPipe-Tasks_API-00A98F?logo=google&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)
+![Dashboard](https://img.shields.io/badge/dashboard-Streamlit-FF4B4B?logo=streamlit&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-> **v2.0** — migrated off the deprecated `mediapipe.solutions` API to the actively maintained **Tasks API**, and added pretrained gesture classification, blur detection, historical reporting, unit tests, and CI.
+> **v2.0** — migrated off the deprecated `mediapipe.solutions` API to the actively maintained **Tasks API**, and added pretrained gesture classification, blur detection, historical reporting, a Streamlit dashboard, unit tests, and CI.
 
 ---
 
@@ -52,6 +53,7 @@ The result is a lightweight but extensible engine capable of auditing a camera f
 - 📦 **Structured, Typed Reporting** — Dataclass-based reports serialized to a clean, stable JSON schema.
 - 📊 **Session History + CSV Export** — Every processed frame is retained in-memory and exportable to CSV for trend analysis.
 - 🎥 **Live Webcam Demo** — Real-time on-screen overlay of all metrics, with in-app CSV export.
+- 🖥️ **Streamlit Dashboard** — Point-and-click UI with image upload, live webcam, tunable thresholds, and CSV/JSON export — no code required to try it out.
 - ✅ **Unit Tests + CI** — `pytest` coverage for the classical CV components, run automatically on every push via GitHub Actions.
 
 ---
@@ -66,6 +68,7 @@ The project follows an object-oriented design with clear separation of concerns 
 | **`VisualFeatureExtractor`** | Classical matrix processing with OpenCV/NumPy: HSV-space lighting audit, Canny edge density, and Laplacian-variance sharpness/focus scoring. |
 | **`GestureRecognitionEngine`** | Wraps MediaPipe's Tasks-API `GestureRecognizer` for pretrained gesture classification, plus a custom Euclidean pinch-distance metric computed from the returned hand landmarks. |
 | **`VisionInspectorPipeline`** | Central orchestrator that synchronizes metric capture, measures processing latency, maintains an in-memory session history, and exports it to CSV. |
+| **`dashboard.py`** | Streamlit front-end over the pipeline: image upload, live webcam, sidebar threshold tuning, and one-click CSV/JSON export — reuses the exact same core classes. |
 
 ```
 Frame (BGR) ──▶ VisualFeatureExtractor ──▶ lighting audit + edge density + sharpness
@@ -101,7 +104,8 @@ industrial-vision-engine/
 ├── src/
 │   ├── config.py               # InspectionConfig dataclass (all tunables)
 │   ├── vision_engine.py        # Core module: extractor, gesture engine, pipeline
-│   └── webcam_demo.py          # Real-time webcam demo with overlay + CSV export
+│   ├── webcam_demo.py          # Real-time webcam demo with overlay + CSV export
+│   └── dashboard.py            # Streamlit GUI: upload / live webcam / history
 ├── scripts/
 │   └── download_models.py      # Fetches the required .task model asset
 ├── tests/
@@ -111,6 +115,7 @@ industrial-vision-engine/
 ├── models/                     # Downloaded .task model lives here (gitignored)
 ├── requirements.txt
 ├── requirements-dev.txt
+├── requirements-dashboard.txt
 ├── pyproject.toml
 ├── LICENSE
 └── README.md
@@ -168,7 +173,24 @@ python src/webcam_demo.py
 
 Controls: press **`q`** to quit (auto-exports session history to `session_report.csv`), or **`c`** to export at any time without quitting.
 
-### 3. Use it as a library in your own code
+### 3. Run the Streamlit dashboard (GUI)
+
+The easiest way to demo the project — a point-and-click interface with no terminal output to read:
+
+```bash
+pip install -r requirements-dashboard.txt
+streamlit run src/dashboard.py
+```
+
+It opens in your browser at `http://localhost:8501` with three tabs:
+
+- **🖼️ Upload Image** — drop in a photo and instantly see the full audit (works even without a webcam).
+- **📷 Live Webcam** — toggle your camera on for a continuously updating live feed with metric cards.
+- **📄 History** — every processed frame in a sortable table, with CSV/JSON export in the sidebar.
+
+The sidebar also lets you tune every threshold (brightness range, blur cutoff, gesture confidence, pinch distance) live, without touching code.
+
+### 4. Use it as a library in your own code
 
 ```python
 import cv2
@@ -184,7 +206,7 @@ inspector.export_history_csv("session_report.csv")
 inspector.close()
 ```
 
-### 4. Tune thresholds for your environment
+### 5. Tune thresholds for your environment
 
 ```python
 from src.config import InspectionConfig
@@ -274,6 +296,7 @@ Distributed under the MIT License. See [`LICENSE`](LICENSE) for details.
 
 ## 👤 Author
 
-Jhoan Sebastian Fernandez
+**Your Name**
+Computer Vision & AI enthusiast — Universidad del Valle
 
 Feel free to connect, open an issue, or suggest improvements via a pull request!
