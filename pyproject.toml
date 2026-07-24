@@ -1,0 +1,17 @@
+[project]
+name = "industrial-vision-engine"
+version = "2.0.0"
+description = "Industrial & biometric vision engine combining classical CV auditing with MediaPipe Tasks gesture recognition."
+requires-python = ">=3.9"
+license = { text = "MIT" }
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]

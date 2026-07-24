@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.pytest_cache/
+.ruff_cache/
 
 # Virtual environments
 venv/
@@ -13,8 +15,14 @@ build/
 dist/
 *.egg-info/
 
+# Downloaded model assets (fetched via scripts/download_models.py)
+models/*.task
+!models/.gitkeep
+
 # Generated reports
 vision_report.json
+session_report.csv
+*.csv
 
 # IDE
 .vscode/
