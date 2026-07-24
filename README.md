@@ -1,4 +1,4 @@
-# 🚀 Industrial & Biometric Vision Engine
+# Industrial & Biometric Vision Engine
 
 **An object-oriented Python suite for image-quality auditing, structural feature extraction, and real-time biometric gesture recognition — built for touchless, high-precision environments such as biomedical labs and industrial plants.**
 
@@ -13,7 +13,7 @@
 
 ---
 
-## 📖 Table of Contents
+## Table of Contents
 
 - [Overview](#-overview)
 - [Key Features](#-key-features)
@@ -31,7 +31,7 @@
 
 ---
 
-## 🔎 Overview
+## Overview
 
 **InspecVision AI** unifies two complementary layers of Computer Vision into a single, production-style inspection pipeline:
 
@@ -42,23 +42,23 @@ The result is a lightweight but extensible engine capable of auditing a camera f
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-- 💡 **Lighting Quality Audit** — HSV-space brightness analysis with configurable pass/fail thresholds.
-- 🔬 **Blur / Focus Detection** — Laplacian-variance sharpness scoring, flagging out-of-focus frames (a real-world QA check on industrial lines).
-- 🧩 **Structural Feature Extraction** — Gaussian-smoothed Canny edge maps with quantified edge density.
-- ✋ **Pretrained Gesture Recognition** — 7-class classifier (`Thumbs_Up`, `Thumbs_Down`, `Victory`, `Pointing_Up`, `Closed_Fist`, `Open_Palm`, `ILoveYou`) via MediaPipe's Gesture Recognizer task, with per-gesture confidence.
-- 🤏 **Custom Pinch Metric** — 3D Euclidean distance between thumb and index fingertip landmarks, layered on top of the pretrained classifier for a finer-grained "click" signal.
-- ⏱️ **Performance Telemetry** — Per-frame processing latency captured automatically for every report.
-- 📦 **Structured, Typed Reporting** — Dataclass-based reports serialized to a clean, stable JSON schema.
-- 📊 **Session History + CSV Export** — Every processed frame is retained in-memory and exportable to CSV for trend analysis.
-- 🎥 **Live Webcam Demo** — Real-time on-screen overlay of all metrics, with in-app CSV export.
-- 🖥️ **Streamlit Dashboard** — Point-and-click UI with image upload, live webcam, tunable thresholds, and CSV/JSON export — no code required to try it out.
-- ✅ **Unit Tests + CI** — `pytest` coverage for the classical CV components, run automatically on every push via GitHub Actions.
+- **Lighting Quality Audit** — HSV-space brightness analysis with configurable pass/fail thresholds.
+- **Blur / Focus Detection** — Laplacian-variance sharpness scoring, flagging out-of-focus frames (a real-world QA check on industrial lines).
+- **Structural Feature Extraction** — Gaussian-smoothed Canny edge maps with quantified edge density.
+- **Pretrained Gesture Recognition** — 7-class classifier (`Thumbs_Up`, `Thumbs_Down`, `Victory`, `Pointing_Up`, `Closed_Fist`, `Open_Palm`, `ILoveYou`) via MediaPipe's Gesture Recognizer task, with per-gesture confidence.
+- **Custom Pinch Metric** — 3D Euclidean distance between thumb and index fingertip landmarks, layered on top of the pretrained classifier for a finer-grained "click" signal.
+- **Performance Telemetry** — Per-frame processing latency captured automatically for every report.
+- **Structured, Typed Reporting** — Dataclass-based reports serialized to a clean, stable JSON schema.
+- **Session History + CSV Export** — Every processed frame is retained in-memory and exportable to CSV for trend analysis.
+- **Live Webcam Demo** — Real-time on-screen overlay of all metrics, with in-app CSV export.
+- **Streamlit Dashboard** — Point-and-click UI with image upload, live webcam, tunable thresholds, and CSV/JSON export — no code required to try it out.
+- **Unit Tests + CI** — `pytest` coverage for the classical CV components, run automatically on every push via GitHub Actions.
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 The project follows an object-oriented design with clear separation of concerns and low coupling:
 
@@ -85,7 +85,7 @@ Frame (BGR) ──▶ VisualFeatureExtractor ──▶ lighting audit + edge den
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Python 3.9+**
 - **OpenCV** — image I/O, color-space conversion, filtering, edge/blur detection
@@ -96,7 +96,7 @@ Frame (BGR) ──▶ VisualFeatureExtractor ──▶ lighting audit + edge den
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 industrial-vision-engine/
@@ -123,7 +123,7 @@ industrial-vision-engine/
 
 ---
 
-## ⚙️ Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -149,11 +149,11 @@ pip install -r requirements.txt
 python scripts/download_models.py
 ```
 
-> ⚠️ Step 4 is required. MediaPipe's Tasks API ships models as separate `.task` files instead of bundling them in the pip package — skipping this step raises a clear `FileNotFoundError` telling you to run it.
+> Step 4 is required. MediaPipe's Tasks API ships models as separate `.task` files instead of bundling them in the pip package — skipping this step raises a clear `FileNotFoundError` telling you to run it.
 
 ---
 
-## ▶️ Usage
+## Usage
 
 ### 1. Run the self-contained demo
 
@@ -184,9 +184,9 @@ streamlit run src/dashboard.py
 
 It opens in your browser at `http://localhost:8501` with three tabs:
 
-- **🖼️ Upload Image** — drop in a photo and instantly see the full audit (works even without a webcam).
-- **📷 Live Webcam** — toggle your camera on for a continuously updating live feed with metric cards.
-- **📄 History** — every processed frame in a sortable table, with CSV/JSON export in the sidebar.
+- **Upload Image** — drop in a photo and instantly see the full audit (works even without a webcam).
+- **Live Webcam** — toggle your camera on for a continuously updating live feed with metric cards.
+- **History** — every processed frame in a sortable table, with CSV/JSON export in the sidebar.
 
 The sidebar also lets you tune every threshold (brightness range, blur cutoff, gesture confidence, pinch distance) live, without touching code.
 
@@ -218,7 +218,7 @@ inspector = VisionInspectorPipeline(operator_id="QA_Station_01", config=config)
 
 ---
 
-## 📊 Sample Output
+## Sample Output
 
 ```json
 {
@@ -250,7 +250,7 @@ See [`examples/sample_report.json`](examples/sample_report.json) for the full fi
 
 ---
 
-## ✅ Testing & CI
+## Testing & CI
 
 Unit tests cover `VisualFeatureExtractor` with synthetic frames (no model download required, so they run anywhere, including CI):
 
@@ -264,7 +264,7 @@ Every push and pull request to `main` runs the same lint + test suite via [GitHu
 
 ---
 
-## 🩹 Troubleshooting
+## Troubleshooting
 
 ### `AttributeError: module 'mediapipe' has no attribute 'solutions'`
 
@@ -278,7 +278,7 @@ Run `python scripts/download_models.py` once after installing dependencies — s
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [ ] Switch the webcam demo to `RunningMode.VIDEO` for temporally-smoothed tracking
 - [ ] Support batch processing for folders of images
@@ -288,7 +288,7 @@ Run `python scripts/download_models.py` once after installing dependencies — s
 
 ---
 
-## 📄 License
+## License
 
 Distributed under the MIT License. See [`LICENSE`](LICENSE) for details.
 
@@ -296,7 +296,4 @@ Distributed under the MIT License. See [`LICENSE`](LICENSE) for details.
 
 ## 👤 Author
 
-**Your Name**
-Computer Vision & AI enthusiast — Universidad del Valle
-
-Feel free to connect, open an issue, or suggest improvements via a pull request!
+Jhoan Sebastian Fernandez
