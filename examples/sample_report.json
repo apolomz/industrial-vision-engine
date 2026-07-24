@@ -1,0 +1,19 @@
+{
+    "metadata": {
+        "operator": "Eng_Sanchez_Univalle",
+        "timestamp": "Fri Jul 24 09:12:03 2026",
+        "processing_latency_ms": 18.42
+    },
+    "image_audit": {
+        "average_brightness": 63.87,
+        "lighting_status": "APPROVED"
+    },
+    "biometric_telemetry": {
+        "hand_detected": true,
+        "gesture": "PINCH_CLICK",
+        "normalized_distance": 0.0412
+    },
+    "structural_analysis": {
+        "edge_density_percentage": 4.31
+    }
+}
