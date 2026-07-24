@@ -201,7 +201,6 @@ Distributed under the MIT License. See [`LICENSE`](LICENSE) for details.
 
 ## 👤 Author
 
-**Your Name**
-Computer Vision & AI enthusiast — Universidad del Valle
+Jhoan Sebastian Fernandez
 
 Feel free to connect, open an issue, or suggest improvements via a pull request!
